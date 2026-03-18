@@ -39,7 +39,8 @@ export class Project {
         this.getAllProjects(); // refresh project list after update
         this.resetForm(); // reset form after update
       });
-    } else {
+    } 
+    else {
       //save
       this.masterService.saveProject(this.newProject).subscribe({
         next: (result: any) => {
