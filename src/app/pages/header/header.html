@@ -1,0 +1,102 @@
+<div class="flex min-h-screen bg-slate-100">
+  <!-- Sidebar -->
+  <aside
+    [class.w-64]="!isCollapsed"
+    [class.w-20]="isCollapsed"
+    class="bg-[#1b2e4b] text-white transition-all duration-300 flex flex-col shadow-lg"
+  >
+    <div class="h-[70px] flex items-center justify-center border-b border-white/10 px-3 text-lg font-semibold">
+      <span *ngIf="!isCollapsed">Welcome!</span>
+      <span *ngIf="isCollapsed">
+        <i class="fa-solid fa-layer-group"></i>
+      </span>
+    </div>
+
+    <ul class="p-3 space-y-2">
+      <li>
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="sidebar-link"
+        >
+          <i class="fa-solid fa-house"></i>
+          <span *ngIf="!isCollapsed" class="ml-4">Dashboard</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/project"
+          routerLinkActive="active-link"
+          class="sidebar-link"
+        >
+          <i class="fa-solid fa-building"></i>
+          <span *ngIf="!isCollapsed" class="ml-4">Projects</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/task"
+          routerLinkActive="active-link"
+          class="sidebar-link"
+        >
+          <i class="fa-solid fa-id-badge"></i>
+          <span *ngIf="!isCollapsed" class="ml-4">Tasks</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/user"
+          routerLinkActive="active-link"
+          class="sidebar-link"
+        >
+          <i class="fa-solid fa-user"></i>
+          <span *ngIf="!isCollapsed" class="ml-4">Users</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="sidebar-link cursor-pointer" (click)="logout()">
+          <i class="fa-solid fa-sign-out-alt"></i>
+          <span *ngIf="!isCollapsed" class="ml-4">Log Off</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1 flex flex-col min-w-0">
+    <nav class="h-[70px] bg-white border-b border-slate-200 flex items-center justify-between px-5 shadow-sm">
+      <button
+        class="h-10 w-10 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#1b2e4b] transition"
+        (click)="toggleSidebar()"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="text-xl font-bold text-[#1b2e4b]">Task Management</div>
+
+      <div class="flex items-center gap-2">
+        <button
+          class="h-10 w-10 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#1b2e4b] transition border-none"
+        >
+          <i class="fa-solid fa-user"></i>
+        </button>
+
+        <button
+          class="h-10 w-10 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#1b2e4b] transition border-none"
+          (click)="logout()"
+        >
+          <i class="fa-solid fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="flex-1 p-6 overflow-y-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
