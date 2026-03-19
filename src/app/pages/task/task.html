@@ -1,1 +1,119 @@
-<p>task works!</p>
+<div class="container-fluid py-4 px-3 task-page">
+
+    <!-- Create Task -->
+
+
+    <div class="grid grid-cols-3 gap-4 mb-4">
+        <div>
+            <label class="form-label">Task Title</label>
+            <input type="text" class="form-control" placeholder="Enter task title" [(ngModel)]="newTask.taskTitle" />
+        </div>
+
+        <div>
+            <label class="form-label">Project</label>
+            <select class="form-select" [(ngModel)]="newTask.projectId">
+                <option selected disabled>Select Project</option>
+                @for (item of projectList(); track $index) {
+                <option [ngValue]="item.projectId">{{ item.projTitle }}</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label">Assign To</label>
+            <select class="form-select bg-black/5">
+                <option selected disabled>User is 1 for now</option>
+            </select>
+        </div> 
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mb-4">
+        <div>
+            <label class="form-label">Due Date</label>
+            <input type="date" class="form-control" [(ngModel)]="newTask.dueDate" />
+        </div>
+
+        <div>
+            <label class="form-label">Status</label>
+            <select [(ngModel)]="newTask.status" class="form-select">
+                <option [ngValue]="null" disabled>Select Status</option>
+                @for (item of statusOptions; track item.value) {
+                <option [ngValue]="item.value">{{ item.label }}</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label">Priority</label>
+            <select class="form-select" [(ngModel)]="newTask.priority">
+                <option selected disabled>Select Priority</option>
+                @for (item of priorityOptions; track $index) {
+                <option [ngValue]="item">{{ item }}   </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" rows="3" placeholder="Enter task description" [(ngModel)]="newTask.description"></textarea>
+    </div>
+
+    <div class="flex gap-2">
+        <button class="btn btn-save" (click)="onSave()"> {{ isEditMode ? 'Update' : 'Save' }}</button>
+        <button class="btn btn-reset" (click)="resetForm()">Reset</button>
+    </div>
+
+
+ 
+    <!-- Task List -->
+    <div class="task-box mt-6">
+        <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+            <h5 class="box-title mb-0">Task List</h5>
+            <input type="text" class="form-control search-box" placeholder="Search task..." />
+        </div>
+
+        <div class="table-wrap">
+            <table class="task-table w-full">
+                <thead>
+                    <tr class="task-head-row">
+                        <th class="task-th">SN</th>
+                        <th class="task-th">Task Title</th>
+                        <th class="task-th">Project</th>
+                        <th class="task-th">Assigned To</th>
+                        <th class="task-th">Description</th>
+                        <th class="task-th">Status</th>
+                        <th class="task-th">Priority</th>
+                        <th class="task-th">Created</th>
+                        <th class="task-th">Due</th>
+                        <th class="task-th">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @for (item of taskList(); track $index) {
+                    <tr class="task-row">
+                        <td class="task-td task-text-muted">{{ $index + 1 }}</td>
+                        <td class="task-td task-title-cell">{{ item.taskTitle }}</td>
+                        <td class="task-td task-text-muted">{{ item.projTitle }}</td>
+                        <td class="task-td task-text-muted">{{ item.userName }}</td>
+                        <td class="task-td task-text-muted">{{ item.description }}</td>
+                        <td class="task-td">
+                            {{ item.status }}
+                        </td>
+                        <td class="task-td">
+                            {{ item.priority }}
+                        </td>
+                        <td class="task-td task-text-muted">{{ item.createdDate }}</td>
+                        <td class="task-td task-text-muted">{{ item.dueDate }}</td>
+                        <td class="task-td task-action-cell">
+                            <button class="btn btn-edit btn-sm" (click)="onEdit(item)">Edit</button>
+                            <button class="btn btn-delete btn-sm" (click)="onDelete(item.taskId)">Delete</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

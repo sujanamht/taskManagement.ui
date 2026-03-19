@@ -11,6 +11,7 @@ export class Master {
   apiUrl = 'https://localhost:7022/api';
   http = inject(HttpClient);
 
+ // project
   getAllProjects() {
     return this.http.get(this.apiUrl + '/projects');
   }
@@ -31,11 +32,27 @@ export class Master {
     return this.http.delete(this.apiUrl + '/projects/' + id);
   }
 
-  saveTask(task: any) {
-    return this.http.post(this.apiUrl + '/tasks', task);
+  // task
+  getAllTasks() {
+    return this.http.get(this.apiUrl + '/TaskItems');
   }
 
-  getAllTasks() {
-    return this.http.get(this.apiUrl + '/tasks');
+  getTaskById(id: string) {
+    return this.http.get(this.apiUrl + '/TaskItems/' + id);
   }
+
+  saveTask(task: any) {
+    return this.http.post(this.apiUrl + '/TaskItems', task);
+  }
+
+  updateTask(task: any) {
+    return this.http.put(this.apiUrl + '/TaskItems/' + task.taskId, task);
+  }
+
+  deleteTask(id: string) {
+    return this.http.delete(this.apiUrl + '/TaskItems/' + id);
+  }
+
+// user
+
 }

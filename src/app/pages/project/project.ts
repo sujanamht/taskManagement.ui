@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { ProjectModel } from '../../models/project.model';
 import { Master } from '../../services/master';
 import { FormsModule } from '@angular/forms';
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './project.html',
   styleUrl: './project.css',
 })
-export class Project {
+export class Project implements OnInit {
   newProject: ProjectModel = new ProjectModel();
   masterService = inject(Master);
   projectList = signal<ProjectModel[]>([]);
@@ -28,7 +28,7 @@ export class Project {
     });
   }
 
-  saveProject() {
+  onSave() {
     debugger;
     this.newProject.userId = 1; // Assuming userId is 1 for now, replace with actual user ID as needed
 
@@ -64,14 +64,14 @@ export class Project {
     { value: 'Completed', label: 'Completed' },
   ];
 
-  editProject(data: ProjectModel) {
+  onEdit(data: ProjectModel) {
     const strData = JSON.stringify(data);
     const parseData = JSON.parse(strData);
     this.newProject = parseData;
     this.isEditMode = true; // Set edit mode when editing a project
   }
 
-  deleteProject(project: ProjectModel) {
+  onDelete(project: ProjectModel) {
     if (confirm('Are you sure you want to delete this project?')) {
       this.masterService.deleteProject(project.projectId.toString()).subscribe({
         next: (result: any) => {
