@@ -1,1 +1,114 @@
-<p>user works!</p>
+<div class="container-fluid py-4 px-3 user-page">
+
+  <!-- Create User -->
+  <div class="user-box mb-4">
+    <h5 class="box-title">{{ isEditMode ? 'Update User' : 'Create User' }}</h5>
+
+    <div class="grid grid-cols-3 gap-4 mb-4">
+      <div>
+        <label class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter first name"
+          [(ngModel)]="newUser.firstName"
+        />
+      </div>
+
+      <div>
+        <label class="form-label">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter last name"
+          [(ngModel)]="newUser.lastName"
+        />
+      </div>
+
+
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mb-4">
+            <div>
+        <label class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter email"
+          [(ngModel)]="newUser.email"
+        />
+      </div>
+      <div>
+        <label class="form-label">Role</label>
+        <select class="form-select" [(ngModel)]="newUser.role">
+          <option [ngValue]="null" disabled>Select Role</option>
+          @for (item of roleOptions; track item) {
+            <option [ngValue]="item">{{ item }}</option>
+          }
+        </select>
+      </div>
+
+      <div></div>
+    </div>
+
+    <div class="flex gap-2">
+      <button class="btn btn-save" (click)="onSave()">
+        {{ isEditMode ? 'Update' : 'Save' }}
+      </button>
+      <button class="btn btn-reset" (click)="resetForm()">Reset</button>
+    </div>
+  </div>
+
+  <!-- User List -->
+  <div class="user-box mt-6">
+    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+      <h5 class="box-title mb-0">User List</h5>
+      <input
+        type="text"
+        class="form-control search-box"
+        placeholder="Search user..."
+        [(ngModel)]="searchText"
+      />
+    </div>
+
+    <div class="table-wrap">
+      <table class="user-table w-full">
+        <thead>
+          <tr class="user-head-row">
+            <th class="user-th">SN</th>
+            <th class="user-th">First Name</th>
+            <th class="user-th">Last Name</th>
+            <th class="user-th">Email</th>
+            <th class="user-th">Role</th>
+            <th class="user-th">Created</th>
+            <th class="user-th">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+         @for (item of userList(); track $index) {
+          <tr class="user-row">
+            <td class="user-td user-text-muted">{{ $index + 1 }}</td>
+            <td class="user-td user-title-cell">{{ item.firstName }}</td>
+            <td class="user-td user-text-muted">{{ item.lastName }}</td>
+            <td class="user-td user-text-muted">{{ item.email }}</td>
+
+            <td class="user-td">
+              {{ item.role }}
+
+            </td>
+
+            <td class="user-td user-text-muted">{{ item.createdDate | date:'medium' }}</td>
+
+
+            <td class="user-td user-action-cell">
+              <button class="btn btn-edit btn-sm" (click)="onEdit(item)">Edit</button>
+              <button class="btn btn-delete btn-sm" (click)="onDelete(item.userId)">Delete</button>
+            </td>
+          </tr>
+          } 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -54,5 +54,24 @@ export class Master {
   }
 
 // user
+  getAllUsers() {
+    return this.http.get(this.apiUrl + '/users');
+  }
+
+  getUserById(id: string) {
+    return this.http.get(this.apiUrl + '/users/' + id);
+  }
+
+  saveUser(user: any) {
+    return this.http.post(this.apiUrl + '/users', user);
+  }
+
+  updateUser(user: any) {
+    return this.http.put(this.apiUrl + '/users/' + user.userId, user);
+  }
+
+  deleteUser(id: string) {
+    return this.http.delete(this.apiUrl + '/users/' + id);
+  }
 
 }
